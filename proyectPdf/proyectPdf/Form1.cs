@@ -186,6 +186,7 @@ namespace proyectPdf
             //DialogResult resul = new DialogResult();
             OpenFileDialog fil= new OpenFileDialog();
             //fil.Filter = "Excel  *.xls";
+            fil.Filter = "Excel | *.xlsx; *.xls";
             if (fil.ShowDialog() ==System.Windows.Forms.DialogResult.OK)
             {
                 button1.Visible = true ;
