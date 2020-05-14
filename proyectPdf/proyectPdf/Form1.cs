@@ -38,7 +38,16 @@ namespace proyectPdf
 
             label2.Text = "Generando archivos pdf. Por favor espere!";
             String filepath= label1.Text;
-            FileStream stream = File.Open(filepath,FileMode.Open,FileAccess.Read);
+            FileStream stream = null;
+            try
+            {
+                stream = File.Open(filepath, FileMode.Open, FileAccess.Read);
+            }
+            catch
+            {
+                MessageBox.Show("Por favor cierre el Archivo Excel ingresado y vuelva a intentar", "Mensaje de error");
+                Application.Exit();
+            }
             IExcelDataReader excelReader;
             if (Path.GetExtension(filepath).ToUpper() == ".xls" )
             {
