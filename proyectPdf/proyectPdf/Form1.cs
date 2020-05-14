@@ -85,12 +85,13 @@ namespace proyectPdf
                 //doc.Add(c);
                 String dni = table.Rows[i][4].ToString(); // cuil
 
+                //verifico si existe el archivo
+                //String pathFile1 = pathString + "/" + dni + ".pdf";
+                //String pathFile = File.Exists(pathFile1) ? pathString + "/" + dni + "_" + i + ".pdf" : pathFile1  ; 
                 Document doc = new Document(PageSize.A4, 120f, 50f, 140f, 0f);
-
                 int dniRepetidos = 0;
                 bool repetido = true;
-
-                while (repetido) 
+                while (repetido)
                 {
                     if (File.Exists(pathString + "/" + dni + ".pdf"))
                     {
@@ -104,8 +105,6 @@ namespace proyectPdf
                             repetido = false;
                             PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" + dni + "_" + dniRepetidos + ".pdf", FileMode.Create));
                         }
-
-
                     }
                     else
                     {
@@ -113,26 +112,27 @@ namespace proyectPdf
                     }
                 }
 
-                   
                 
-
-                //PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" +  i +"_"+ dni + ".pdf", FileMode.Create));
                 doc.Open();
 
                 //Image image = Image.GetInstance("c:/users/franco/desktop/01.jpg");
-                Image image = Image.GetInstance(@"../../../images/01.jpg");
+                Image image = Image.GetInstance(@"01.jpg");
+                Image image02 = Image.GetInstance(@"02.jpg");
                 //image.ScalePercent(18f);
                 image.ScaleToFit(150f, 110f);
+                image02.ScaleToFit(50f, 30f);
                 image.SetAbsolutePosition(120, 770);
+                image02.SetAbsolutePosition(450, 770);
                 //image.ScaleAbsoluteHeight(50);
                 //image.ScaleAbsoluteWidth(100);
                 doc.Add(image);
+                doc.Add(image02);
 
                 //header 
                 String anio = DateTime.Today.ToString("yyyy"); //2020
                 String nombreDia = DateTime.Today.ToString("dddd"); //martes 
                 String numeroDia = DateTime.Today.ToString("dd"); //22
-                String mes = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(4); //abril
+                String mes = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month); //abril
                 String fechaActual = nombreDia + " " + numeroDia + " de " + mes + " del " + anio;
                 Paragraph p = new Paragraph("SAN MIGUEL DE TUCUMÁN, " + fechaActual, fontBlack);
                 p.Alignment = Element.ALIGN_CENTER;
@@ -158,22 +158,16 @@ namespace proyectPdf
 
                 //clase para convertir numeros a letras
                 convertirNumerosALetras convertir = new convertirNumerosALetras();
-
                 //
-
                 String obligacion = table.Rows[i][2].ToString();
                 String fechaHoy = DateTime.Today.ToString("dd-MM-yyyy") + ", ";
                 String texto3 = obligacion + " por el instrumento otorgado en fecha " + fechaHoy;
                 //String nombrePrecio = " (pesos ________________________).-";
-                String nombrePrecio = " .-";
-                String precio1 = table.Rows[i][10].ToString(); // TOTAL
-                //String precio = precio1 + nombrePrecio;
-                //MessageBox.Show();
+                String precioNro = table.Rows[i][10].ToString(); // TOTAL
+                String nombrePrecio = " (pesos "+convertir.convertir(float.Parse(precioNro)) + ").-";
 
-                string precioALetras = convertir.convertir(float.Parse(precio1));
-                
-
-                String texto4 = texto3 + "que fue presentado en copia ante la DIRECCIÓN GENERAL DE RENTAS, emitiéndose a los fines del pago del Impuesto de Sellos el formulario 600 (F.600), por un importe total de $ " + precio1+" (pesos "+ precioALetras + ").-";
+                String precio = precioNro + nombrePrecio;
+                String texto4 = texto3 + "que fue presentado en copia ante la DIRECCIÓN GENERAL DE RENTAS, emitiéndose a los fines del pago del Impuesto de Sellos el formulario 600 (F.600), por un importe total de $ " + precio;
                 String texto1 = "presentó ante este Organismo Declaración Jurada del Impuesto de Sellos – F.950, Obligación N° " + texto4;
                 Paragraph texto2 = new Paragraph(texto1, font);
                 doc.Add(texto2);
@@ -183,6 +177,7 @@ namespace proyectPdf
             }//end for
 
             MessageBox.Show("PDFs creados en\n"+ pathString);
+            Close();
             
         }
 

@@ -8,6 +8,7 @@ namespace proyectPdf
 {
     class convertirNumerosALetras
     {
+
         public string convertir(float numero)
         {
             double numeroEntero = Math.Truncate(numero);
@@ -121,6 +122,9 @@ namespace proyectPdf
             return Num2Text;
 
         }
+
+
+
 
     }
 }
