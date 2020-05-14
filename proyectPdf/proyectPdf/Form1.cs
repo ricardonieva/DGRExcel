@@ -86,7 +86,37 @@ namespace proyectPdf
                 String dni = table.Rows[i][4].ToString(); // cuil
 
                 Document doc = new Document(PageSize.A4, 120f, 50f, 140f, 0f);
-                PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" +  i +"_"+ dni + ".pdf", FileMode.Create));
+
+                int dniRepetidos = 0;
+                bool repetido = true;
+
+                while (repetido) 
+                {
+                    if (File.Exists(pathString + "/" + dni + ".pdf"))
+                    {
+                        dniRepetidos = dniRepetidos + 1;
+                        if (File.Exists(pathString + "/" + dni + "_" + dniRepetidos + ".pdf"))
+                        {
+
+                        }
+                        else
+                        {
+                            repetido = false;
+                            PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" + dni + "_" + dniRepetidos + ".pdf", FileMode.Create));
+                        }
+
+
+                    }
+                    else
+                    {
+                        PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" + dni + ".pdf", FileMode.Create));
+                    }
+                }
+
+                   
+                
+
+                //PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" +  i +"_"+ dni + ".pdf", FileMode.Create));
                 doc.Open();
 
                 //Image image = Image.GetInstance("c:/users/franco/desktop/01.jpg");
@@ -153,7 +183,6 @@ namespace proyectPdf
             }//end for
 
             MessageBox.Show("PDFs creados en\n"+ pathString);
-            Close();
             
         }
 
