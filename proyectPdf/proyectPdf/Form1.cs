@@ -88,7 +88,7 @@ namespace proyectPdf
                 //verifico si existe el archivo
                 //String pathFile1 = pathString + "/" + dni + ".pdf";
                 //String pathFile = File.Exists(pathFile1) ? pathString + "/" + dni + "_" + i + ".pdf" : pathFile1  ; 
-                Document doc = new Document(PageSize.A4, 120f, 50f, 140f, 0f);
+                Document doc = new Document(PageSize.A4, 90f, 50f, 140f, 0f);
                 int dniRepetidos = 0;
                 bool repetido = true;
                 while (repetido)
@@ -121,8 +121,8 @@ namespace proyectPdf
                 //image.ScalePercent(18f);
                 image.ScaleToFit(150f, 110f);
                 image02.ScaleToFit(50f, 30f);
-                image.SetAbsolutePosition(120, 770);
-                image02.SetAbsolutePosition(450, 770);
+                image.SetAbsolutePosition(90, 770);
+                image02.SetAbsolutePosition(480, 770);
                 //image.ScaleAbsoluteHeight(50);
                 //image.ScaleAbsoluteWidth(100);
                 doc.Add(image);
@@ -173,12 +173,11 @@ namespace proyectPdf
                 doc.Add(texto2);
                 doc.Close();
 
-
             }//end for
 
             MessageBox.Show("PDFs creados en\n"+ pathString);
             Close();
-            
+            Application.Exit();
         }
 
         private void button2_Click(object sender, EventArgs e)
