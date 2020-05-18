@@ -161,8 +161,13 @@ namespace proyectPdf
                 convertirNumerosALetras convertir = new convertirNumerosALetras();
                 //
                 String obligacion = table.Rows[i][3].ToString();
-                String fechaHoy = DateTime.Today.ToString("dd-MM-yyyy") + ", ";
-                String texto3 = obligacion + " por el instrumento otorgado en fecha " + fechaHoy;
+                //String fechaHoy = DateTime.Today.ToString("dd-MM-yyyy") + ", ";
+
+                DateTime fechaDeOtorgamiento = Convert.ToDateTime(table.Rows[i][12].ToString());
+                fechaDeOtorgamiento = fechaDeOtorgamiento.AddDays(-15);
+
+
+                String texto3 = obligacion + " por el instrumento otorgado en fecha " + fechaDeOtorgamiento.ToString("dd/MM/yyyy") + ", ";
                 //String nombrePrecio = " (pesos ________________________).-";
                 String precioNro = table.Rows[i][10].ToString(); // TOTAL
                 String nombrePrecio = " (pesos "+convertir.convertir(float.Parse(precioNro)) + ").-";
