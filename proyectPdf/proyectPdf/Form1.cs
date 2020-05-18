@@ -74,7 +74,7 @@ namespace proyectPdf
             //end fuentes
 
             String pathOrigin = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            String folder = "pdfs";
+            String folder = DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
             String pathString = System.IO.Path.Combine(pathOrigin, folder);
             System.IO.Directory.CreateDirectory(pathString);
             for (int i = 1; i < table.Rows.Count; i++)
@@ -159,7 +159,7 @@ namespace proyectPdf
                 //clase para convertir numeros a letras
                 convertirNumerosALetras convertir = new convertirNumerosALetras();
                 //
-                String obligacion = table.Rows[i][2].ToString();
+                String obligacion = table.Rows[i][3].ToString();
                 String fechaHoy = DateTime.Today.ToString("dd-MM-yyyy") + ", ";
                 String texto3 = obligacion + " por el instrumento otorgado en fecha " + fechaHoy;
                 //String nombrePrecio = " (pesos ________________________).-";
