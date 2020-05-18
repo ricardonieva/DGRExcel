@@ -74,7 +74,7 @@ namespace proyectPdf
             //end fuentes
 
             String pathOrigin = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            String folder = "pdfs "+ DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+            String folder = "pdfs_"+ DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
             String pathString = System.IO.Path.Combine(pathOrigin, folder);
             System.IO.Directory.CreateDirectory(pathString);
             for (int i = 1; i < table.Rows.Count; i++)
