@@ -109,6 +109,7 @@ namespace proyectPdf
                     else
                     {
                         repetido = false;
+
                         PdfWriter wri = PdfWriter.GetInstance(doc, new FileStream(pathString + "/" + dni + ".pdf", FileMode.Create));
                     }
                 }
