@@ -49,7 +49,7 @@ namespace proyectPdf
                 Application.Exit();
             }
             IExcelDataReader excelReader;
-            if (Path.GetExtension(filepath).ToUpper() == ".xls" )
+            if (Path.GetExtension(filepath) == ".xls" )
             {
                 //excel xls
                 excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
@@ -164,8 +164,8 @@ namespace proyectPdf
                 String obligacion = table.Rows[i][3].ToString();
                 //String fechaHoy = DateTime.Today.ToString("dd-MM-yyyy") + ", ";
 
-                DateTime fechaDeOtorgamiento = Convert.ToDateTime(table.Rows[i][12].ToString());
-                fechaDeOtorgamiento = fechaDeOtorgamiento.AddDays(-15);
+                DateTime fechaDeOtorgamiento = Convert.ToDateTime(table.Rows[i][16].ToString());
+                //fechaDeOtorgamiento = fechaDeOtorgamiento.AddDays(-15);
 
 
                 String texto3 = obligacion + " por el instrumento otorgado en fecha " + fechaDeOtorgamiento.ToString("dd/MM/yyyy") + ", ";
