@@ -135,7 +135,7 @@ namespace proyectPdf
                 String nombreDia = DateTime.Today.ToString("dddd"); //martes 
                 String numeroDia = DateTime.Today.ToString("dd"); //22
                 String mes = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month); //abril
-                String fechaActual = nombreDia + " " + numeroDia + " de " + mes + " del " + anio;
+                String fechaActual = numeroDia + " de " + mes + " del " + anio;
                 Paragraph p = new Paragraph("SAN MIGUEL DE TUCUMÁN, " + fechaActual, fontBlack);
                 p.Alignment = Element.ALIGN_CENTER;
                 doc.Add(p);
@@ -147,16 +147,27 @@ namespace proyectPdf
                 doc.Add(Chunk.NEWLINE);
                 //end header
 
-                String f = "                Conforme lo dispuesto por el 2° párrafo del artículo 282 del Código Tributario Provincial, se deja constancia que el contribuyente identificado con la CUIT/CUIL:  ";
-                Paragraph texto = new Paragraph(f, font);
-                doc.Add(texto);
+                //String f = "                Conforme lo dispuesto por el 2° párrafo del artículo 282 del Código Tributario Provincial, se deja constancia que el contribuyente identificado con la CUIT/CUIL:  ";
+                //Paragraph texto = new Paragraph(f, font);
+                //texto.Alignment = (int)HorizontalAlignment.Left;
+
+                //doc.Add(texto);
 
                 //Paragraph razonsocial = new Paragraph(" CECILIA", fontBlack);
                 dni = dni + ", ";
                 String razon_social = table.Rows[i][5].ToString();
 
-                Paragraph dni1 = new Paragraph(dni + razon_social, fontBlack);
-                doc.Add(dni1);
+                if (razon_social == "")
+                {
+                    
+                }
+                else
+                {
+                    razon_social = razon_social + " ";
+                }
+
+                //Paragraph dni1 = new Paragraph(dni + razon_social, fontBlack);
+                //doc.Add(dni1);
 
                 //clase para convertir numeros a letras
                 convertirNumerosALetras convertir = new convertirNumerosALetras();
@@ -174,10 +185,25 @@ namespace proyectPdf
                 String nombrePrecio = " (pesos "+convertir.convertir(float.Parse(precioNro)) + ").-";
 
                 String precio = precioNro + nombrePrecio;
-                String texto4 = texto3 + "que fue presentado en copia ante la DIRECCIÓN GENERAL DE RENTAS, emitiéndose a los fines del pago del Impuesto de Sellos el formulario 600 (F.600), por un importe total de $ " + precio;
-                String texto1 = "presentó ante este Organismo Declaración Jurada del Impuesto de Sellos – F.950, Obligación N° " + texto4;
-                Paragraph texto2 = new Paragraph(texto1, font);
+                String texto4 = texto3 + "que fue presentado en copia ante la DIRECCIÓN GENERAL DE RENTAS, emitiéndose a los fines del pago del Impuesto de Sellos el formulario 600 (F.600), por un importe total de $ "+ precio;
+                String texto1 = "Conforme lo dispuesto por el 2° párrafo del artículo 282 del Código Tributario Provincial, se deja constancia que el contribuyente identificado con la CUIT/CUIL: " + dni + razon_social + "presentó ante este Organismo Declaración Jurada del Impuesto de Sellos – F.950, Obligación N° " + texto4;
+                Paragraph texto2 = new Paragraph();
+                texto2.TabSettings = new TabSettings(100f);
+                texto2.Add(Chunk.TABBING);
+                texto2.Font = font;
+                texto2.Add(texto1);          
+                texto2.Alignment = Element.ALIGN_JUSTIFIED;
                 doc.Add(texto2);
+
+                string textoAgregado = "EL INSTRUMENTO AL QUE SE REFIERE LA PRESENTE CONSTANCIA SE CONSIDERARÁ HABILITADO CON EL IMPUESTO DE SELLOS SIEMPRE QUE SE ENCUENTRE ACOMPAÑADO POR LA RESPECTIVA DECLARACIÓN JURADA - F950 Y EL COMPROBANTE DE PAGO O INSTRUMENTO DE CANCELACIÓN CORRESPONDIENTE.";
+                Paragraph parrafoUltimo = new Paragraph();
+                parrafoUltimo.TabSettings = new TabSettings(100f);
+                parrafoUltimo.Add(Chunk.TABBING);
+                parrafoUltimo.Font = font;
+                parrafoUltimo.Add(textoAgregado);
+                parrafoUltimo.Alignment = Element.ALIGN_JUSTIFIED;
+                doc.Add(parrafoUltimo);
+
                 doc.Close();
 
             }//end for
